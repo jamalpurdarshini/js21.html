@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pizza Delivery System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        color: #ff5722;
+      }
+
+      #log {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        height: 200px;
+        overflow-y: auto;
+      }
+
+      .btn {
+        background-color: #ff5722;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .btn:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pizza Delivery System</h1>
+      <button id="startButton" class="btn">Start Process</button>
+      <div id="log"></div>
+    </div>
+
+    <script>
+      function logMessage(message) {
+        const log = document.getElementById("log");
+        const p = document.createElement("p");
+        p.textContent = message;
+        log.appendChild(p);
+        log.scrollTop = log.scrollHeight;
+      }
+      function placeOrder(orderDetails, callback) {
+        logMessage(`Placing order for: ${orderDetails}`);
+        setTimeout(() => {
+          callback(null, "Order placed successfully");
+        }, 1000);
+      }
+      function preparePizza(orderDetails, callback) {
+        logMessage(`Preparing pizza for: ${orderDetails}`);
+        setTimeout(() => {
+          callback(null, "Pizza prepared");
+        }, 2000);
+      }
+      function bakePizza(orderDetails, callback) {
+        logMessage(`Baking pizza for: ${orderDetails}`);
+        setTimeout(() => {
+          callback(null, "Pizza baked");
+        }, 3000);
+      }
+      function packPizza(orderDetails, callback) {
+        logMessage(`Packing pizza for: ${orderDetails}`);
+        setTimeout(() => {
+          callback(null, "Pizza packed");
+        }, 1000);
+      }
+      function deliverPizza(orderDetails, callback) {
+        logMessage(`Delivering pizza for: ${orderDetails}`);
+        setTimeout(() => {
+          callback(null, "Pizza delivered");
+        }, 2000);
+      }
+      document.getElementById("startButton").addEventListener("click", () => {
+        document.getElementById("startButton").disabled = true;
+        placeOrder("Pepperoni Pizza", (err, status) => {
+          if (err) {
+            logMessage(`Error: ${err}`);
+            return;
+          }
+          logMessage(status);
+          preparePizza("Pepperoni Pizza", (err, status) => {
+            if (err) {
+              logMessage(`Error: ${err}`);
+              return;
+            }
+            logMessage(status);
+            bakePizza("Pepperoni Pizza", (err, status) => {
+              if (err) {
+                logMessage(`Error: ${err}`);
+                return;
+              }
+              logMessage(status);
+              packPizza("Pepperoni Pizza", (err, status) => {
+                if (err) {
+                  logMessage(`Error: ${err}`);
+                  return;
+                }
+                logMessage(status);
+                deliverPizza("Pepperoni Pizza", (err, status) => {
+                  if (err) {
+                    logMessage(`Error: ${err}`);
+                    return;
+                  }
+                  logMessage(status);
+                  logMessage("Pizza delivery process completed!");
+                  document.getElementById("startButton").disabled = false;
+                });
+              });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html> 
